@@ -13,13 +13,21 @@
 .product-recommended {
     width: 100px;
     text-align: center;
-    height: 100px;
-    background: red;
     margin: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.product-recommended:hover {
+    background-color: #fff;
+    -webkit-box-shadow: 0 6px 6px 0 rgba(155,154,155,.5);
+    box-shadow: 0 6px 6px 0 rgba(155,154,155,.5);
+    transition: outline-color .2s ease-in;
+    outline-color: #000;
+    z-index: 1;
+    cursor: pointer;
 }
 
 .arrow {
@@ -28,12 +36,6 @@
     align-items: center;
     height: 100%;
     padding: 10px;
-    height: 100px;
-    background: yellow;
-}
-
-.center {
-    background: blue;
 }
 
 .carrousel{
