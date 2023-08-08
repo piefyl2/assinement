@@ -15,7 +15,7 @@ function injectHTML(file, div){
     fetch(file, {cache: "no-store"})
     .then((response) => response.text())
     .then((text) => {
-        div.innerHTML = text
+        div.append(text)
       }
     ).then(()=>  {
         updateProducts(0)
