@@ -18,9 +18,10 @@ function injectHTML(file, div){
         div.innerHTML = text
       }
     ).then(()=>  {
+        updateProducts(0)
         document.getElementById('arrow-right').onclick = next
         document.getElementById('arrow-left').onclick = previous
-        updateProducts(0)}
+    }
     )
 }
 
