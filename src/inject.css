@@ -1,0 +1,6 @@
+.product-recommendation {
+    flex-grow: 2;
+    padding-top: 60px;
+    width: 100%;
+    position: relative;
+}
