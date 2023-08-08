@@ -39,6 +39,14 @@ function updateProducts(direction){
     }
 }
 
+function next(){
+    updateProducts(1)
+}
+
+function previous(){
+    updateProducts(-1)
+}
+
 class Product {
     constructor(img, title, price) {
         this.img = img;
@@ -58,14 +66,17 @@ let recommendation = document.createElement("div")
 injectHTML(baseURL+'inject.html', recommendation)
 productDetail.parentNode.insertBefore(recommendation, productDetail.nextSibling)
 
-// add action on keyboards
+// add actions
 document.addEventListener("keydown", function(event) {
     if (event.key == "ArrowLeft"){
-        updateProducts(1)
+        next()
     } else if (event.key == "ArrowRight"){
-        updateProducts(-1)
+        previous()
     }
  });
+
+ document.getElementById('arrow-right').onclick = next
+ document.getElementById('arrow-left').onclick = next
 
 
 
