@@ -32,7 +32,6 @@ function createCarrousel(nbProductToDisplay){
         carrousel.parentNode.append(createproduct('Product '+product));
     }
     carrousel.parentNode.append(createArrow('&gt;'));
-    <div class="arrow"></div>
 }
 
 function createRecommendation(){
@@ -45,7 +44,7 @@ function createRecommendation(){
     
 }
 
-console.log('V2')
+console.log('V3')
 
 const baseURL = 'https://raw.githubusercontent.com/piefyl2/assinement/dev/src/'
 addCss(baseURL+'inject.css')
