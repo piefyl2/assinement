@@ -2,4 +2,4 @@ function run(){
     window.alert('ok')
 }
 
-window.alert('init')
+document.getElementsByClassName('fn title')[0].innerHTML='ok 2'
