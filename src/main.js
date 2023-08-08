@@ -6,7 +6,9 @@ function run(){
     productDetail.parentNode.insertBefore(newNode, productDetail.nextSibling);
 }
 
-let const baseURL = 'https://raw.githubusercontent.com/piefyl2/assinement/dev/src/'
+console.log('1')
+
+const baseURL = 'https://raw.githubusercontent.com/piefyl2/assinement/dev/src/'
 // integrate css
 document.getElementsByTagName('head')[0].insertAdjacentHTML(
     'beforeend',
