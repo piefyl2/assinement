@@ -9,3 +9,33 @@
     font-size: 18px;
     color:  #4b4d4d;
 }
+
+.product-recommended {
+    width: 100px;
+    text-align: center;
+    height: 100px;
+    background: red;
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.arrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 10px;
+    height: 100px;
+    background: yellow;
+}
+
+.center {
+    background: blue;
+}
+
+.carrousel{
+    display: inline-flex;
+    align-items: center;
+}
