@@ -4,3 +4,8 @@
     width: 100%;
     position: relative;
 }
+
+.product-recommendation-title{
+    font-size: 18px;
+    color:  #4b4d4d;
+}
