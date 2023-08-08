@@ -18,6 +18,8 @@ function injectHTML(file, div){
         div.innerHTML = text
       }
     ).then(()=>  {
+        document.getElementById('arrow-right').onclick = next
+        document.getElementById('arrow-left').onclick = previous
         updateProducts(0)}
     )
 }
@@ -74,11 +76,6 @@ document.addEventListener("keydown", function(event) {
         previous()
     }
  });
-
- document.getElementById('arrow-right').onclick = next
- document.getElementById('arrow-left').onclick = next
-
-
 
 let currentDisplay = 0
 
