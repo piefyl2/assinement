@@ -18,21 +18,9 @@ function injectHTML(file, div){
         div.innerHTML = text
         console.log(1)
         updateProducts(0)
-        document.getElementById('arrow-right').onclick = next
-        document.getElementById('arrow-left').onclick = previous
+        document.getElementById('arrow-right').onclick = previous
+        document.getElementById('arrow-left').onclick = next
       }
-    ).then(()=>  {
-        console.log(2)
-        updateProducts(0)
-        document.getElementById('arrow-right').onclick = next
-        document.getElementById('arrow-left').onclick = previous
-    }
-    ).then(()=>  {
-        console.log(3)
-        updateProducts(0)
-        document.getElementById('arrow-right').onclick = next
-        document.getElementById('arrow-left').onclick = previous
-    }
     )
 }
 
