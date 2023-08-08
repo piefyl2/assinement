@@ -9,8 +9,19 @@ function run(){
 console.log('1')
 
 const baseURL = 'https://raw.githubusercontent.com/piefyl2/assinement/dev/src/'
-// integrate css
+// integrate css avoiding CORB
+fetch(baseURL+'inject.css', {cache: "no-store"})
+  .then((response) => response.text())
+  .then((text) => {
+    const style = document.createElement('style');
+    style.textContent = text;
+    document.head.append(style);
+    eval(style)
+    }
+  )
+
+
 document.getElementsByTagName('head')[0].insertAdjacentHTML(
     'beforeend',
-    '<link rel="stylesheet" href="'+baseURL+'inject.css" />');
+    '<link rel="stylesheet" href="'+ />');
 run()
