@@ -17,6 +17,8 @@ function injectHTML(file, div){
     .then((text) => {
         div.innerHTML = text
       }
+    ).then(()=>  {
+        updateProducts(0)}
     )
 }
 
@@ -44,19 +46,29 @@ productDetail.parentNode.insertBefore(recommendation, productDetail.nextSibling)
 let currentDisplay = 0
 
 // Init model
-let products = []
-for (let product = 0; product < 6; product++) {
-    products[product] = new Product('https://demostore.x-cart.com/images/product/clo_'+product+'.jpg','Product '+product, product+'.00 €')
-}
+let products = [
+new Product('https://demostore.x-cart.com/images/product/clo_1.jpg','Product 1', '1.00 €'),
+new Product('https://demostore.x-cart.com/images/product/clo_3.jpg','Product 2', '2.00 €'),
+new Product('https://demostore.x-cart.com/images/product/clo_4.jpg','Product 3', '3.00 €'),
+new Product('https://demostore.x-cart.com/images/product/clo_5.jpg','Product 4', '4.00 €'),
+new Product('https://demostore.x-cart.com/images/product/clo_6.jpg','Product 5', '5.00 €'),
+new Product('https://demostore.x-cart.com/images/product/clo_9.jpg','Product 6', '6.00 €')
+]
 
 // First update
-function updateProducts(products, firstDisplay){
+function updateProducts(direction){
+    console.log(currentDisplay)
+    currentDisplay = (currentDisplay+direction)%products.length
+    while(currentDisplay<0){
+        currentDisplay += (products.length)
+    }
+
+
     for (let i = 0; i < 3; i++) {
-        currentUpdate = firstDisplay + i
-        let product = document.getElementById('product-recommended-'+id)
-        product.getElementsByTagName('img')[0].src=products[currentUpdate].title
-        product.getElementById('title').src=products[currentUpdate].price
+        currentUpdate = (currentDisplay + i) % products.length
+        let product = document.getElementById('product-recommended-'+i)
+        product.querySelector('img').src=products[currentUpdate].img
+        product.querySelector('#title').textContent=products[currentUpdate].title
+        product.querySelector('#price').textContent=products[currentUpdate].price
     }
 }
-
-updateProducts(products, currentDisplay)
