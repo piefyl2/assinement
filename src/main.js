@@ -15,9 +15,20 @@ function injectHTML(file, div){
     fetch(file, {cache: "no-store"})
     .then((response) => response.text())
     .then((text) => {
-        div.append(text)
+        div.innerHTML = text
+        console.log(1)
+        updateProducts(0)
+        document.getElementById('arrow-right').onclick = next
+        document.getElementById('arrow-left').onclick = previous
       }
     ).then(()=>  {
+        console.log(2)
+        updateProducts(0)
+        document.getElementById('arrow-right').onclick = next
+        document.getElementById('arrow-left').onclick = previous
+    }
+    ).then(()=>  {
+        console.log(3)
         updateProducts(0)
         document.getElementById('arrow-right').onclick = next
         document.getElementById('arrow-left').onclick = previous
