@@ -26,18 +26,16 @@
 .arrow:hover {
     color:#386eaf;
 }
-
+.flickity-slider {
+    margin-left: 50px;
+    margin-right: 50px;
+}
 
 .product-recommended {
     width: 34%;
     text-align: center;
     margin: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     color:#4b4d4d;
-    padding: 10px;
 }
 
 .product-recommended img {
