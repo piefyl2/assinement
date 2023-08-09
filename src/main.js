@@ -1,4 +1,4 @@
-const baseURL = 'https://raw.githubusercontent.com/piefyl2/assinement/flickity/src/'
+const baseURL = 'https://raw.githubusercontent.com/piefyl2/assinement/master-flickity/src/'
 
 // integrate css avoiding CORB
 function injectText(file, type){
