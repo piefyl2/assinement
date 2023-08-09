@@ -10,6 +10,24 @@
     color:  #4b4d4d;
 }
 
+
+.arrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background: white;
+    padding: 10px;
+    border: white;
+    font-size: xx-large;
+    font-weight: bolder;
+}
+
+.arrow:hover {
+    color:#386eaf;
+}
+
+
 .product-recommended {
     width: 300px;
     text-align: center;
@@ -18,12 +36,18 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    color:#4b4d4d;
+    padding: 10px;
 }
-
 
 .product-recommended img {
     width: 200px;
     height: 200px;
+    padding-bottom: 10px;
+}
+
+.product-recommended#title{
+    height: 60px;
 }
 
 .product-recommended:hover {
@@ -34,6 +58,7 @@
     outline-color: #000;
     z-index: 1;
     cursor: pointer;
+    color:#386eaf;
 }
 
 .arrow {

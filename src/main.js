@@ -1,16 +1,25 @@
-const baseURL = 'https://raw.githubusercontent.com/piefyl2/assinement/dev/src/'
+const baseURL = 'https://raw.githubusercontent.com/piefyl2/assinement/flickity/src/'
+
 
 // integrate css avoiding CORB
-function injectCss(file){
+function injectText(file, type){
     fetch(file, {cache: "no-store"})
     .then((response) => response.text())
     .then((text) => {
-      const style = document.createElement('style');
+      const style = document.createElement(type);
       style.textContent = text;
       document.head.append(style);
       eval(style)
       }
     )
+}
+// integrate css avoiding CORB
+function injectCss(file){
+    injectText(file,'style')
+}
+// integrate js avoiding CORB
+function injectCss(file){
+    injectText(file,'script')
 }
 // integrate html avoiding CORB
 function injectHTML(file, div){
@@ -68,6 +77,7 @@ function updateProducts(direction){
         product.querySelector('#title').textContent=products[currentUpdate].title
         product.querySelector('#price').textContent=products[currentUpdate].price
     }
+    console.info('Product dislay updated')
 }
 
 function next(){
@@ -78,14 +88,23 @@ function previous(){
     updateProducts(-1)
 }
 
+console.info('Script loaded')
+
+
+console.info('Inject framework')
+injectCss('https://unpkg.com/flickity@2.3.0/dist/flickity.min.css')
+injectJs('https://unpkg.com/flickity@2.3.0/dist/flickity.pkgd.min.js')
+
 // Add default CSS
 injectCss(baseURL+'inject.css')
+console.info('CSS injected')
 
 // Add carroussel
 let productDetail = document.getElementsByClassName('product-details-info')[0]
 let recommendation = document.createElement("div")
 injectHTML(baseURL+'inject.html', recommendation)
 productDetail.parentNode.insertBefore(recommendation, productDetail.nextSibling)
+console.info('Recommendation injected')
 
  // Position of the current poduct displayed
  let currentDisplay = 0
@@ -95,6 +114,7 @@ productDetail.parentNode.insertBefore(recommendation, productDetail.nextSibling)
 fetch('https://fakestoreapi.com/products?limit=6')
             .then(res=>res.json())
             .then(json=> {
+                console.info('Product data loaded')
                 for (let index = 0; index < json.length; index++) {
                     let fakeproduct = json[index]
                     products[index]=new Product('https://demostore.x-cart.com/',fakeproduct.image,fakeproduct.title, fakeproduct.price + ' €')
