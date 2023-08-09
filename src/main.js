@@ -1,4 +1,4 @@
-const baseURL = 'https://raw.githubusercontent.com/piefyl2/master/dev/src/'
+const baseURL = 'https://raw.githubusercontent.com/piefyl2/assinement/master/src/'
 
 // integrate css avoiding CORB
 function injectCss(file){
