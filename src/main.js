@@ -98,7 +98,7 @@ injectCss('https://unpkg.com/flickity@2.3.0/dist/flickity.min.css')
     .then(() =>injectJs('https://unpkg.com/flickity@2.3.0/dist/flickity.pkgd.min.js'))
     .then(() => waitForElm('.carrousel'))
     .then((elm) => {
-        waitForElm('.carrousel').then((elm) => {
+        waitForElm('.product-recommended-title').then((elm) => {
             var flkty = new Flickity( document.querySelector('.carrousel'), {
                 // options
                 wrapAround: true
