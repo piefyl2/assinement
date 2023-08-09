@@ -62,13 +62,7 @@ class Product {
 
 
 // Update products displayed on the caroussel
-function updateProducts(direction){
-    currentDisplay = (currentDisplay+direction)%products.length
-    while(currentDisplay<0){
-        currentDisplay += (products.length)
-    }
-
-
+function updateProducts(){
     let productsElements = document.getElementsByClassName('product-recommended')
     for (let i = 0; i < productsElements.length; i++) {
         currentUpdate = (currentDisplay + i) % products.length
