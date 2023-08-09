@@ -1,5 +1,6 @@
 const baseURL = 'https://raw.githubusercontent.com/piefyl2/assinement/master-flickity/src/'
 
+// ******** UTILITARY FUNCTIONS **************
 // integrate css avoiding CORB
 function injectText(file, type){
     return fetch(file, {cache: "no-store"})
@@ -22,7 +23,7 @@ function injectJs(file){
 }
 // integrate html avoiding CORB
 function injectHTML(file, after){
-    fetch(file, {cache: "no-store"})
+    return fetch(file, {cache: "no-store"})
     .then((response) => response.text())
     .then((text) => {
         document.querySelector(after)
@@ -31,6 +32,7 @@ function injectHTML(file, after){
     )
 }
 
+// Function to wait for an element to added in the tree.
 function waitForElm(selector) {
     return new Promise(resolve => {
         if (document.querySelector(selector)) {
@@ -51,6 +53,8 @@ function waitForElm(selector) {
     });
 }
 
+// ******** MODEL **************
+// Product Model.
 class Product {
     constructor(url, img, title, price) {
         this.url = url;
@@ -60,8 +64,9 @@ class Product {
     }
 }
 
+// ******** CARROUSEL MANAGEMENT **************
 
-// Update products displayed on the caroussel
+// Update products displayed on the carroussel
 function updateProducts(){
     let productsElements = document.getElementsByClassName('product-recommended')
     for (let i = 0; i < productsElements.length; i++) {
@@ -77,8 +82,15 @@ function updateProducts(){
 
 console.info('Script loaded')
 
+// ******** INSTANTIATION **************
+// Carrousel
 let flkty
 
+// Product model list
+let products = []
+
+
+// Bypass the library event manager as they only switch with keyboard when the element is on focus
 document.addEventListener("keydown", function(event) {
     if (flkty !== undefined) {
     if (event.key == "ArrowLeft"){
@@ -89,11 +101,23 @@ document.addEventListener("keydown", function(event) {
     }
 });
 
+// Add default CSS
+injectCss(baseURL+'inject.css')
+console.info('CSS injected')
+
+// Add carroussel template
+let productDetail = document.getElementsByClassName('product-details-info')[0]
+let recommendation = document.createElement("div")
+injectHTML(baseURL+'inject.html', '.product-details-info')
+console.info('HTML injected')
+
 console.info('Inject framework')
+// Inject library then instantiates it
 injectCss('https://unpkg.com/flickity@2.3.0/dist/flickity.min.css')
     .then(() =>injectJs('https://unpkg.com/flickity@2.3.0/dist/flickity.pkgd.min.js'))
     .then(() => waitForElm('.carrousel'))
     .then((elm) => {
+        // Make sure that the carousel template has been integrated in the tree
         waitForElm('.product-recommended-title').then((elm) => {
             flkty = new Flickity( document.querySelector('.carrousel'), {
                 // options
@@ -102,21 +126,8 @@ injectCss('https://unpkg.com/flickity@2.3.0/dist/flickity.min.css')
             });
         })
     })
-    
 
-// Add default CSS
-injectCss(baseURL+'inject.css')
-console.info('CSS injected')
-
-// Add carroussel
-let productDetail = document.getElementsByClassName('product-details-info')[0]
-let recommendation = document.createElement("div")
-injectHTML(baseURL+'inject.html', '.product-details-info')
-console.info('HTML injected')
-
- let products = []
-
-// Init model then update product list and add actions end display
+// Init model with external data then update product list and add actions end display
 console.info('Fetch product info')
 fetch('https://fakestoreapi.com/products?limit=6', {cache: "no-store"})
             .then(res=>res.json())
