@@ -1,3 +1,5 @@
+const baseURL = 'https://raw.githubusercontent.com/piefyl2/assinement/dev/src/'
+
 // integrate css avoiding CORB
 function injectCss(file){
     fetch(file, {cache: "no-store"})
@@ -16,14 +18,41 @@ function injectHTML(file, div){
     .then((response) => response.text())
     .then((text) => {
         div.innerHTML = text
-        updateProducts(0)
-        document.getElementById('arrow-right').onclick = previous
-        document.getElementById('arrow-left').onclick = next
       }
     )
 }
 
-// Update carousel display
+function waitForElm(selector) {
+    return new Promise(resolve => {
+        if (document.querySelector(selector)) {
+            return resolve(document.querySelector(selector));
+        }
+
+        const observer = new MutationObserver(mutations => {
+            if (document.querySelector(selector)) {
+                resolve(document.querySelector(selector));
+                observer.disconnect();
+            }
+        });
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    });
+}
+
+class Product {
+    constructor(url, img, title, price) {
+        this.url = url;
+        this.img = img;
+        this.title = title;
+        this.price = price;
+    }
+}
+
+
+// Update products displayed on the caroussel
 function updateProducts(direction){
     currentDisplay = (currentDisplay+direction)%products.length
     while(currentDisplay<0){
@@ -49,17 +78,6 @@ function previous(){
     updateProducts(-1)
 }
 
-class Product {
-    constructor(url, img, title, price) {
-        this.url = url;
-        this.img = img;
-        this.title = title;
-        this.price = price;
-    }
-}
-
-const baseURL = 'https://raw.githubusercontent.com/piefyl2/assinement/dev/src/'
-
 // Add default CSS
 injectCss(baseURL+'inject.css')
 
@@ -69,19 +87,11 @@ let recommendation = document.createElement("div")
 injectHTML(baseURL+'inject.html', recommendation)
 productDetail.parentNode.insertBefore(recommendation, productDetail.nextSibling)
 
-// add actions
-document.addEventListener("keydown", function(event) {
-    if (event.key == "ArrowLeft"){
-        next()
-    } else if (event.key == "ArrowRight"){
-        previous()
-    }
- });
+ // Position of the current poduct displayed
+ let currentDisplay = 0
+ let products = []
 
-let currentDisplay = 0
-
-// Init model
-
+// Init model then update product list and add actions end display
 fetch('https://fakestoreapi.com/products?limit=6')
             .then(res=>res.json())
             .then(json=> {
@@ -89,14 +99,24 @@ fetch('https://fakestoreapi.com/products?limit=6')
                     let fakeproduct = json[index]
                     products[index]=new Product('https://demostore.x-cart.com/',fakeproduct.image,fakeproduct.title, fakeproduct.price + ' €')
                 }
-                updateProducts(0)
-        })
 
-let products = [
-new Product('https://demostore.x-cart.com/','https://demostore.x-cart.com/images/product/clo_1.jpg','Product 1', '1.00 €'),
-new Product('https://demostore.x-cart.com/','https://demostore.x-cart.com/images/product/clo_3.jpg','Product 2', '2.00 €'),
-new Product('https://demostore.x-cart.com/','https://demostore.x-cart.com/images/product/clo_4.jpg','Product 3', '3.00 €'),
-new Product('https://demostore.x-cart.com/','https://demostore.x-cart.com/images/product/clo_5.jpg','Product 4', '4.00 €'),
-new Product('https://demostore.x-cart.com/','https://demostore.x-cart.com/images/product/clo_6.jpg','Product 5', '5.00 €'),
-new Product('https://demostore.x-cart.com/','https://demostore.x-cart.com/images/product/clo_9.jpg','Product 6', '6.00 €')
-]
+                waitForElm('#product-recommended-0').then((elm) => {
+                    updateProducts(0)
+
+                    document.getElementById('arrow-right').onclick = previous
+                    document.getElementById('arrow-left').onclick = next
+
+                    // add actions
+                    document.addEventListener("keydown", function(event) {
+                        if (event.key == "ArrowLeft"){
+                            next()
+                        } else if (event.key == "ArrowRight"){
+                            previous()
+                        }
+                    });
+                    document.getElementsByClassName('product-recommendation')[0].display='block'
+                });
+                 
+        })
+        
+
