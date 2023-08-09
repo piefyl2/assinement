@@ -3,7 +3,7 @@ const baseURL = 'https://raw.githubusercontent.com/piefyl2/assinement/flickity/s
 
 // integrate css avoiding CORB
 function injectText(file, type){
-    fetch(file, {cache: "no-store"})
+    return fetch(file, {cache: "no-store"})
     .then((response) => response.text())
     .then((text) => {
       const style = document.createElement(type)
@@ -15,11 +15,11 @@ function injectText(file, type){
 }
 // integrate css avoiding CORB
 function injectCss(file){
-    injectText(file,'style')
+    return injectText(file,'style')
 }
 // integrate js avoiding CORB
 function injectJs(file){
-    injectText(file,'script')
+    return injectText(file,'script')
 }
 // integrate html avoiding CORB
 function injectHTML(file, div){
@@ -93,7 +93,23 @@ console.info('Script loaded')
 
 console.info('Inject framework')
 injectCss('https://unpkg.com/flickity@2.3.0/dist/flickity.min.css')
-injectJs('https://unpkg.com/flickity@2.3.0/dist/flickity.pkgd.min.js')
+    .then(() =>injectJs('https://unpkg.com/flickity@2.3.0/dist/flickity.pkgd.min.js'))
+    .then(() => waitForElm('.carrousel'))
+    .then((elm) => {
+        waitForElm('.carrousel').then((elm) => {
+            var flkty = new Flickity( document.querySelector('.carrousel'), {
+                // options
+                wrapAround: true
+            });
+            
+            // element argument can be a selector string
+            //   for an individual element
+            var flkty = new Flickity( '.carrousel', {
+                // options
+            });
+        })
+    })
+    
 
 // Add default CSS
 injectCss(baseURL+'inject.css')
@@ -123,33 +139,8 @@ fetch('https://fakestoreapi.com/products?limit=6')
 
                 waitForElm('.carrousel').then((elm) => {
                     updateProducts(0)
-
-                    document.getElementById('arrow-right').onclick = previous
-                    document.getElementById('arrow-left').onclick = next
-
-                    // add actions
-                    document.addEventListener("keydown", function(event) {
-                        if (event.key == "ArrowLeft"){
-                            next()
-                        } else if (event.key == "ArrowRight"){
-                            previous()
-                        }
-                    });
                     document.getElementsByClassName('product-recommendation')[0].display='block'
                 });
                  
         })
-        
-        waitForElm('.carrousel').then((elm) => {
-            var flkty = new Flickity( elem, {
-                // options
-                wrapAround: true
-              });
-              
-              // element argument can be a selector string
-              //   for an individual element
-              var flkty = new Flickity( '.carrousel', {
-                // options
-              });
-        });
 
