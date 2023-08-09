@@ -6,9 +6,9 @@ function injectText(file, type){
     fetch(file, {cache: "no-store"})
     .then((response) => response.text())
     .then((text) => {
-      const style = document.createElement(type);
-      style.textContent = text;
-      document.head.append(style);
+      const style = document.createElement(type)
+      style.textContent = text
+      document.head.append(style)
       eval(style)
       }
     )
@@ -18,7 +18,7 @@ function injectCss(file){
     injectText(file,'style')
 }
 // integrate js avoiding CORB
-function injectCss(file){
+function injectJs(file){
     injectText(file,'script')
 }
 // integrate html avoiding CORB
@@ -105,6 +105,7 @@ let recommendation = document.createElement("div")
 injectHTML(baseURL+'inject.html', recommendation)
 productDetail.parentNode.insertBefore(recommendation, productDetail.nextSibling)
 console.info('Recommendation injected')
+var elem = document.querySelector('.js-flickity');
 
  // Position of the current poduct displayed
  let currentDisplay = 0
@@ -120,7 +121,7 @@ fetch('https://fakestoreapi.com/products?limit=6')
                     products[index]=new Product('https://demostore.x-cart.com/',fakeproduct.image,fakeproduct.title, fakeproduct.price + ' €')
                 }
 
-                waitForElm('#product-recommended-0').then((elm) => {
+                waitForElm('.carrousel').then((elm) => {
                     updateProducts(0)
 
                     document.getElementById('arrow-right').onclick = previous
@@ -139,4 +140,16 @@ fetch('https://fakestoreapi.com/products?limit=6')
                  
         })
         
+        waitForElm('.carrousel').then((elm) => {
+            var flkty = new Flickity( elem, {
+                // options
+                wrapAround: true
+              });
+              
+              // element argument can be a selector string
+              //   for an individual element
+              var flkty = new Flickity( '.carrousel', {
+                // options
+              });
+        });
 
