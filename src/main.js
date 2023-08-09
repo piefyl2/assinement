@@ -125,7 +125,7 @@ console.info('HTML injected')
 
 // Init model then update product list and add actions end display
 console.info('Fetch product info')
-fetch('https://fakestoreapi.com/products?limit=6')
+fetch('https://fakestoreapi.com/products?limit=6', {cache: "no-store"})
             .then(res=>res.json())
             .then(json=> {
                 console.info('Product data fetched')
