@@ -68,6 +68,7 @@ function updateProducts(direction){
         product.querySelector('#title').textContent=products[currentUpdate].title
         product.querySelector('#price').textContent=products[currentUpdate].price
     }
+    console.info('Product dislay updated')
 }
 
 function next(){
@@ -78,14 +79,17 @@ function previous(){
     updateProducts(-1)
 }
 
+console.info('Script loaded')
 // Add default CSS
 injectCss(baseURL+'inject.css')
+console.info('CSS injected')
 
 // Add carroussel
 let productDetail = document.getElementsByClassName('product-details-info')[0]
 let recommendation = document.createElement("div")
 injectHTML(baseURL+'inject.html', recommendation)
 productDetail.parentNode.insertBefore(recommendation, productDetail.nextSibling)
+console.info('Recommendation injected')
 
  // Position of the current poduct displayed
  let currentDisplay = 0
@@ -95,6 +99,7 @@ productDetail.parentNode.insertBefore(recommendation, productDetail.nextSibling)
 fetch('https://fakestoreapi.com/products?limit=6')
             .then(res=>res.json())
             .then(json=> {
+                console.info('Product data loaded')
                 for (let index = 0; index < json.length; index++) {
                     let fakeproduct = json[index]
                     products[index]=new Product('https://demostore.x-cart.com/',fakeproduct.image,fakeproduct.title, fakeproduct.price + ' €')
