@@ -1,6 +1,5 @@
 const baseURL = 'https://raw.githubusercontent.com/piefyl2/assinement/flickity/src/'
 
-
 // integrate css avoiding CORB
 function injectText(file, type){
     return fetch(file, {cache: "no-store"})
@@ -82,16 +81,19 @@ function updateProducts(direction){
     console.info('Product dislay updated')
 }
 
-function next(){
-    updateProducts(1)
-}
-
-function previous(){
-    updateProducts(-1)
-}
-
 console.info('Script loaded')
 
+let flkty
+
+document.addEventListener("keydown", function(event) {
+    if (flkty !== undefined) {
+    if (event.key == "ArrowLeft"){
+        flkty.previous()
+    } else if (event.key == "ArrowRight"){
+        flkty.next()
+    }
+    }
+});
 
 console.info('Inject framework')
 injectCss('https://unpkg.com/flickity@2.3.0/dist/flickity.min.css')
@@ -99,15 +101,10 @@ injectCss('https://unpkg.com/flickity@2.3.0/dist/flickity.min.css')
     .then(() => waitForElm('.carrousel'))
     .then((elm) => {
         waitForElm('.product-recommended-title').then((elm) => {
-            var flkty = new Flickity( document.querySelector('.carrousel'), {
+            flkty = new Flickity( document.querySelector('.carrousel'), {
                 // options
-                wrapAround: true
-            });
-            
-            // element argument can be a selector string
-            //   for an individual element
-            var flkty = new Flickity( '.carrousel', {
-                // options
+                wrapAround: true,
+                accessibility: false
             });
         })
     })
@@ -121,27 +118,25 @@ console.info('CSS injected')
 let productDetail = document.getElementsByClassName('product-details-info')[0]
 let recommendation = document.createElement("div")
 injectHTML(baseURL+'inject.html', '.product-details-info')
+console.info('HTML injected')
 
-var elem = document.querySelector('.js-flickity');
-
- // Position of the current poduct displayed
- let currentDisplay = 0
  let products = []
 
 // Init model then update product list and add actions end display
+console.info('Fetch product info')
 fetch('https://fakestoreapi.com/products?limit=6')
             .then(res=>res.json())
             .then(json=> {
-                console.info('Product data loaded')
+                console.info('Product data fetched')
                 for (let index = 0; index < json.length; index++) {
                     let fakeproduct = json[index]
                     products[index]=new Product('https://demostore.x-cart.com/',fakeproduct.image,fakeproduct.title, fakeproduct.price + ' €')
                 }
 
-                waitForElm('.carrousel').then((elm) => {
+                console.info('Wait Product update with data loaded')
+                waitForElm('.product-recommended-title').then((elm) => {
+                    console.info('Product update with data loaded')
                     updateProducts(0)
-                    document.getElementsByClassName('product-recommendation')[0].display='block'
                 });
-                 
         })
 
