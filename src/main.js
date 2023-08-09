@@ -70,9 +70,10 @@ function updateProducts(direction){
     }
 
 
-    for (let i = 0; i < 3; i++) {
+    let productsElements = document.getElementsByClassName('product-recommended')
+    for (let i = 0; i < productsElements.length; i++) {
         currentUpdate = (currentDisplay + i) % products.length
-        let product = document.getElementById('product-recommended-'+i)
+        let product = productsElements[i]
         product.href = products[currentUpdate].url
         product.querySelector('img').src=products[currentUpdate].img
         product.querySelector('#title').textContent=products[currentUpdate].title
