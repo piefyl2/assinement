@@ -22,11 +22,12 @@ function injectJs(file){
     return injectText(file,'script')
 }
 // integrate html avoiding CORB
-function injectHTML(file, div){
+function injectHTML(file, after){
     fetch(file, {cache: "no-store"})
     .then((response) => response.text())
     .then((text) => {
-        div.innerHTML = text
+        document.querySelector(after)
+                .insertAdjacentHTML("afterend",text);
       }
     )
 }
@@ -118,9 +119,8 @@ console.info('CSS injected')
 // Add carroussel
 let productDetail = document.getElementsByClassName('product-details-info')[0]
 let recommendation = document.createElement("div")
-injectHTML(baseURL+'inject.html', recommendation)
-productDetail.parentNode.insertBefore(recommendation, productDetail.nextSibling)
-console.info('Recommendation injected')
+injectHTML(baseURL+'inject.html', '.product-details-info')
+
 var elem = document.querySelector('.js-flickity');
 
  // Position of the current poduct displayed
