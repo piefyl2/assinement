@@ -65,13 +65,12 @@ class Product {
 function updateProducts(){
     let productsElements = document.getElementsByClassName('product-recommended')
     for (let i = 0; i < productsElements.length; i++) {
-        currentUpdate = (currentDisplay + i) % products.length
         let product = productsElements[i]
-        if (products[currentUpdate].url !== undefined)
-            product.href = products[currentUpdate].url
-        product.querySelector('img').src=products[currentUpdate].img
-        product.querySelector('#title').textContent=products[currentUpdate].title
-        product.querySelector('#price').textContent=products[currentUpdate].price
+        if (products[i].url !== undefined)
+            product.href = products[i].url
+        product.querySelector('img').src=products[i].img
+        product.querySelector('#title').textContent=products[i].title
+        product.querySelector('#price').textContent=products[i].price
     }
     console.info('Product dislay updated')
 }
