@@ -63,7 +63,9 @@ function updateProducts(direction){
     for (let i = 0; i < 3; i++) {
         currentUpdate = (currentDisplay + i) % products.length
         let product = document.getElementById('product-recommended-'+i)
-        product.href = products[currentUpdate].url
+        if (products[currentUpdate].url !== undefined){
+            product.href = products[currentUpdate].url
+        }
         product.querySelector('img').src=products[currentUpdate].img
         product.querySelector('#title').textContent=products[currentUpdate].title
         product.querySelector('#price').textContent=products[currentUpdate].price
@@ -102,7 +104,8 @@ fetch('https://fakestoreapi.com/products?limit=6')
                 console.info('Product data loaded')
                 for (let index = 0; index < json.length; index++) {
                     let fakeproduct = json[index]
-                    products[index]=new Product('https://demostore.x-cart.com/',fakeproduct.image,fakeproduct.title, fakeproduct.price + ' €')
+                    // Data does not provide url, so we will keep the ones we hardcoded.
+                    products[index]=new Product(undefined,fakeproduct.image,fakeproduct.title, fakeproduct.price + ' €')
                 }
 
                 waitForElm('#product-recommended-0').then((elm) => {
