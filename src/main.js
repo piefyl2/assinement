@@ -16,7 +16,6 @@ function injectHTML(file, div){
     .then((response) => response.text())
     .then((text) => {
         div.innerHTML = text
-        console.log(1)
         updateProducts(0)
         document.getElementById('arrow-right').onclick = previous
         document.getElementById('arrow-left').onclick = next
@@ -86,11 +85,9 @@ let currentDisplay = 0
 fetch('https://fakestoreapi.com/products?limit=6')
             .then(res=>res.json())
             .then(json=> {
-                console.log(json)
                 for (let index = 0; index < json.length; index++) {
                     let fakeproduct = json[index]
-                    console.log(fakeproduct)
-                    products[index]=new Product('https://demostore.x-cart.com/',fakeproduct.image,fakeproduct.title, fakeproduct.price)
+                    products[index]=new Product('https://demostore.x-cart.com/',fakeproduct.image,fakeproduct.title, fakeproduct.price + ' €')
                 }
                 updateProducts(0)
         })

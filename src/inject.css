@@ -11,13 +11,19 @@
 }
 
 .product-recommended {
-    width: 100px;
+    width: 300px;
     text-align: center;
     margin: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+
+.product-recommended img {
+    width: 200px;
+    height: 200px;
 }
 
 .product-recommended:hover {
