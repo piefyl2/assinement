@@ -73,7 +73,8 @@ function updateProducts(direction){
     for (let i = 0; i < productsElements.length; i++) {
         currentUpdate = (currentDisplay + i) % products.length
         let product = productsElements[i]
-        product.href = products[currentUpdate].url
+        if (products[currentUpdate].url !== undefined)
+            product.href = products[currentUpdate].url
         product.querySelector('img').src=products[currentUpdate].img
         product.querySelector('#title').textContent=products[currentUpdate].title
         product.querySelector('#price').textContent=products[currentUpdate].price
@@ -130,7 +131,7 @@ fetch('https://fakestoreapi.com/products?limit=6')
                 console.info('Product data fetched')
                 for (let index = 0; index < json.length; index++) {
                     let fakeproduct = json[index]
-                    products[index]=new Product('https://demostore.x-cart.com/',fakeproduct.image,fakeproduct.title, fakeproduct.price + ' €')
+                    products[index]=new Product(undefined,fakeproduct.image,fakeproduct.title, fakeproduct.price + ' €')
                 }
 
                 console.info('Wait Product update with data loaded')
