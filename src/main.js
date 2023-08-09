@@ -1,8 +1,10 @@
 const baseURL = 'https://raw.githubusercontent.com/piefyl2/assinement/master/src/'
 
+
+// ******** UTIITARY FUNCTIONS **************
 // integrate css avoiding CORB
 function injectCss(file){
-    fetch(file, {cache: "no-store"})
+    return fetch(file, {cache: "no-store"})
     .then((response) => response.text())
     .then((text) => {
       const style = document.createElement('style');
@@ -14,7 +16,7 @@ function injectCss(file){
 }
 // integrate html avoiding CORB
 function injectHTML(file, div){
-    fetch(file, {cache: "no-store"})
+    return fetch(file, {cache: "no-store"})
     .then((response) => response.text())
     .then((text) => {
         div.innerHTML = text
@@ -22,6 +24,7 @@ function injectHTML(file, div){
     )
 }
 
+// Function to wait for an element to added in the tree.
 function waitForElm(selector) {
     return new Promise(resolve => {
         if (document.querySelector(selector)) {
@@ -42,6 +45,8 @@ function waitForElm(selector) {
     });
 }
 
+// ******** MODEL **************
+// Product Model.
 class Product {
     constructor(url, img, title, price) {
         this.url = url;
@@ -52,6 +57,7 @@ class Product {
 }
 
 
+// ******** CAROUSEL MANAGEMENT **************
 // Update products displayed on the caroussel
 function updateProducts(direction){
     currentDisplay = (currentDisplay+direction)%products.length
@@ -63,6 +69,7 @@ function updateProducts(direction){
     for (let i = 0; i < 3; i++) {
         currentUpdate = (currentDisplay + i) % products.length
         let product = document.getElementById('product-recommended-'+i)
+        // Only check the URL because, data provider does not provide url. For a demo defensive programme does not seem needed so checking other is not done.
         if (products[currentUpdate].url !== undefined){
             product.href = products[currentUpdate].url
         }
@@ -81,23 +88,31 @@ function previous(){
     updateProducts(-1)
 }
 
+
+
+// ******** INSTANTIATION **************
+
+// Position of the current poduct displayed
+let currentDisplay = 0
+let products = []
+
 console.info('Script loaded')
 // Add default CSS
 injectCss(baseURL+'inject.css')
 console.info('CSS injected')
 
-// Add carroussel
+// Add carrousel
 let productDetail = document.getElementsByClassName('product-details-info')[0]
 let recommendation = document.createElement("div")
-injectHTML(baseURL+'inject.html', recommendation)
+injectHTML(baseURL+'inject.html', recommendation).then(() => {
+    document.getElementById('arrow-right').onclick = previous
+    document.getElementById('arrow-left').onclick = next
+})
+
 productDetail.parentNode.insertBefore(recommendation, productDetail.nextSibling)
 console.info('Recommendation injected')
 
- // Position of the current poduct displayed
- let currentDisplay = 0
- let products = []
-
-// Init model then update product list and add actions end display
+// Get some fake product then update display
 fetch('https://fakestoreapi.com/products?limit=6')
             .then(res=>res.json())
             .then(json=> {
@@ -107,12 +122,9 @@ fetch('https://fakestoreapi.com/products?limit=6')
                     // Data does not provide url, so we will keep the ones we hardcoded.
                     products[index]=new Product(undefined,fakeproduct.image,fakeproduct.title, fakeproduct.price + ' €')
                 }
-
+                // Wait for initial carousel 
                 waitForElm('#product-recommended-0').then((elm) => {
                     updateProducts(0)
-
-                    document.getElementById('arrow-right').onclick = previous
-                    document.getElementById('arrow-left').onclick = next
 
                     // add actions
                     document.addEventListener("keydown", function(event) {
@@ -127,4 +139,3 @@ fetch('https://fakestoreapi.com/products?limit=6')
                  
         })
         
-
